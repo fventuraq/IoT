@@ -15,32 +15,39 @@ public class LedController {
     private static GpioPinDigitalOutput pin;
     private static I2CBus SemTemp;
 
-    @RequestMapping("/") //PUERTO SIN APLICATION
+    @RequestMapping("/") //PUERTO SIN APLICATION test
     public String greeting(){
         return "Welcome Franklin";
     }
 
-    @RequestMapping("/light")
+    //EJERCICIO 1
+
+    @RequestMapping("/light")  //interface ejercicio 2
     public String light(){
 
         if(pin == null){
             System.out.println("Entro aca ...");
             GpioController gpio = GpioFactory.getInstance();
-            pin = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_01, "MyLED", PinState.LOW);
+            pin = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_01, "MyLED", PinState.LOW); //Trabajara en el pin 1 y su estado sera low
         }
 
         System.out.println("ESTADO DEL PIN: "+pin.getState().toString());
 
         pin.toggle();
 
-        return "Ok";
+        return "Ok"; //mensaje de respuesta alejecutar
     }
+
+    //EJERCICIO 2
 
     @RequestMapping("/ledoffon")
     public String offon() throws IOException, I2CFactory.UnsupportedBusNumberException, InterruptedException {
+
+        //Initialize nuestro LED
         GpioController gpio2 = GpioFactory.getInstance();
         pin = gpio2.provisionDigitalOutputPin(RaspiPin.GPIO_02, "MyLED",PinState.LOW);
 
+        //Initialice sensor
         I2CBus bus = I2CFactory.getInstance(I2CBus.BUS_1);
         I2CDevice device = bus.getDevice(0x48);
 
@@ -50,18 +57,17 @@ public class LedController {
         byte[] data = new byte[2];
         device.read(0x00, data, 0, 2);
 
-        //covertimos a temperatura a 12-bits
+        //Convert temperature to 12-bits
         int temp = ((((data[0] & 0xFF)*256) +(data[1]&0xF0))/16);
         if(temp>2047){
             temp-=4096;
         }
 
-        double temCel = temp*0.0625;
+        double temCel = temp*0.0625; //Convert temperature to celcius
 
         System.out.println("TEMPERATURA E: "+temCel);
 
-        //Si a temperatura e maior a 30 o pin se activa
-
+        //Compare temperature
         if(temCel>30){
             pin.setState(PinState.HIGH);
         }else pin.setState(PinState.LOW);
