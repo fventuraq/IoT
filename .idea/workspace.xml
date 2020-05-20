@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e819c7b2-29c7-4988-8721-189c37648dc4" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/franklin/pi4led/controller/LedController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/franklin/pi4led/controller/LedController.java" afterDir="false" />
     </list>

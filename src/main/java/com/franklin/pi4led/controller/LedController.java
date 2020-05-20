@@ -14,7 +14,7 @@ public class LedController {
         return "Welcome Franklin";
     }
 
-    @RequestMapping("/light") //IP + PORT + /light
+    @RequestMapping("/light")
     public String light(){
         if(pin == null){
             GpioController gpio = GpioFactory.getInstance();
